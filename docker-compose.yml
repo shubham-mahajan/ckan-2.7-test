@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+    ckan-test:
+        build:
+            context: ckan/
+            dockerfile: Dockerfile.dev
+        env_file:
+            - .dev.env
+        links:
+            - db-ckan-test
+            - redis-test
+        ports:
+            - "0.0.0.0:8000:5000"
+        volumes:
+            - ./src:/srv/app/src_extensions
+            - ckan_storage:/var/lib/ckan
+
+    db-ckan-test:
+        container_name: db-ckan-test
+        env_file:
+            - .dev.env
+        build:
+            context: postgresql/
+        volumes:
+            - pg_data:/var/lib/postgresql/data
+    redis-test:
+        container_name: redis-test
+        image: redis:alpine
+
+volumes:
+    ckan_storage:
+    pg_data:

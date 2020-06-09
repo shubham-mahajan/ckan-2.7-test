@@ -1,0 +1,9 @@
+FROM openknowledge/ckan-dev:2.7
+
+MAINTAINER Shubham Mahajan
+# Copy config files
+#COPY crontabs/* /etc/crontabs/
+COPY docker-entrypoint.d/* /docker-entrypoint.d/
+COPY supervisor.d/* /etc/supervisord.d/
+#COPY token.dat $APP_DIR/token.dat
+COPY credentials.json $APP_DIR/credentials.json
